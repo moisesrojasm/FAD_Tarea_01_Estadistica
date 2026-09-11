@@ -30,7 +30,7 @@ def datos_tabla_frecuencias(datos):
                     abs += 1
             else:
                 if lim_actual <= dato < limite_sig:
-                                    abs += 1
+                    abs += 1
 
         frec_absolutas.append(abs)
 
