@@ -22,9 +22,9 @@ def media_geometrica(datos_frecuencias):
 
     suma = 0
     for i in range(len(fi)):    
-        suma *= (xi ** fi)  # Cambiar a fórmula con logaritmo base 10
+        suma += (fi ** math.log10(xi))
 
-    return suma ** (1/N)
+    return 10 ** (suma / N)
 
 def media_armonica(datos_frecuencias):
     fi = datos_frecuencias["Frecuencias Abs fi"]

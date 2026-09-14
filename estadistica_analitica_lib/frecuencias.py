@@ -25,7 +25,7 @@ def datos_tabla_frecuencias(datos):
 
         abs = 0
         for dato in datos:
-            if i == total_clases - 1:   # -1 porque i empieza desde 0
+            if i == total_clases - 1:   # -1 porque i empieza desde 0 
                 if lim_actual <= dato <= limite_sig:
                     abs += 1
             else:
