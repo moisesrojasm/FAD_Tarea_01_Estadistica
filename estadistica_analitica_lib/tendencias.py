@@ -60,7 +60,29 @@ def mediana(datos_frecuencias):
 
     return mediana
 
-#def moda(datos_frecuencias):
+def moda(datos_frecuencias):
+    fi = datos_frecuencias["Frecuencias Abs fi"]
+    Li = datos_frecuencias["Limites Inf"]
+    amplitud =datos_frecuencias["Amplitud"]
+
+    ind_moda = fi.index(max(fi))
+
+    if ind_moda == 0:
+        fi_ant = 0
+    else:
+        fi_ant = fi[ind_moda - 1]
+
+    if ind_moda == len(fi) - 1:
+        fi_pos = 0
+    else:
+        fi_pos = fi[ind_moda + 1]
+
+    delta1 = fi[ind_moda] - fi_ant
+    delta2 = fi[ind_moda] - fi_pos
+
+    moda = Li[ind_moda] + (delta1 / (delta1 + delta2)) * amplitud
+
+    return moda
 
 def rcm(datos_frecuencias):
     fi = datos_frecuencias["Frecuencias Abs fi"]
