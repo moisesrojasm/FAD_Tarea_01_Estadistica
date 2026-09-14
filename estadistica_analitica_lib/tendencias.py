@@ -37,7 +37,28 @@ def media_armonica(datos_frecuencias):
 
     return N / suma
 
-#def mediana(datos_frecuencias):
+def mediana(datos_frecuencias):
+    fi = datos_frecuencias["Frecuencias Abs fi"]
+    Fi = datos_frecuencias["Frecuencias Acum Fi"]
+    Li = datos_frecuencias["Limites Inf"]
+    N = datos_frecuencias["N"]
+    amplitud = datos_frecuencias["Amplitud"]
+
+    for i in range(len(Fi)):
+        if Fi[i] >= (N/2):
+            ind_mediana = i
+            if ind_mediana == 0:
+                frec_acum_ant = 0
+            else:
+                frec_acum_ant = Fi[ind_mediana - 1]
+            break
+
+    lim_inf = Li[ind_mediana]
+    frec_abs = fi[ind_mediana]
+
+    mediana = lim_inf + ((N/2 - frec_acum_ant) / frec_abs) * amplitud
+
+    return mediana
 
 #def moda(datos_frecuencias):
 
