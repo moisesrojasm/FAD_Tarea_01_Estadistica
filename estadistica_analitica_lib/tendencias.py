@@ -22,7 +22,7 @@ def media_geometrica(datos_frecuencias):
 
     suma = 0
     for i in range(len(fi)):    
-        suma += (fi ** math.log10(xi))
+        suma += (fi[i] * math.log10(xi[i]))
 
     return 10 ** (suma / N)
 
@@ -33,7 +33,7 @@ def media_armonica(datos_frecuencias):
 
     suma = 0
     for i in range(len(fi)):
-        suma += (fi / xi)
+        suma += (fi[i] / xi[i])
 
     return N / suma
 
@@ -63,7 +63,7 @@ def mediana(datos_frecuencias):
 def moda(datos_frecuencias):
     fi = datos_frecuencias["Frecuencias Abs fi"]
     Li = datos_frecuencias["Limites Inf"]
-    amplitud =datos_frecuencias["Amplitud"]
+    amplitud = datos_frecuencias["Amplitud"]
 
     ind_moda = fi.index(max(fi))
 
@@ -91,8 +91,51 @@ def rcm(datos_frecuencias):
 
     suma = 0
     for i in range(len(fi)):
-        suma *= (fi * xi ** 2)
+        suma += (fi[i] * xi[i] ** 2)
 
     return math.sqrt(suma / N)
 
-#def cuantil(datos_frecuencia, k, q):
+def cuantil(datos_frecuencias, k, q):
+    # k orden del cuantil
+    # q num particiones
+    N = datos_frecuencias["N"]
+    Fi = datos_frecuencias["Frecuencias Acum Fi"]
+    fi = datos_frecuencias["Frecuencias Abs fi"]
+    Li = datos_frecuencias["Limites Inf"]
+    amplitud = datos_frecuencias["Amplitud"]
+    
+    posicion = (k * N) / q
+    
+    clase_cuantil = 0
+    for i in range(len(Fi)):
+        if Fi[i] >= posicion:
+            clase_cuantil = i
+            break
+            
+    Li = Li[clase_cuantil]
+    f = fi[clase_cuantil]
+    
+    if clase_cuantil == 0:
+        Fi_ant = 0
+    else:
+        Fi_ant = Fi[clase_cuantil - 1]
+        
+    return Li + (((posicion - Fi_ant) / f) * amplitud)
+
+def conjunto_cuantiles(datos_frecuencias):
+    resultados = {}
+    
+    # k = 1,2,3
+    for k in range(1, 4):
+        resultados[f"Cuartil {k}"] = cuantil(datos_frecuencias, k, 4)
+        
+    # k = 1 a 9)
+    for k in range(1, 10):
+        resultados[f"Decil {k}"] = cuantil(datos_frecuencias, k, 10)
+        
+    # k = 1 a 99
+    percentiles_elegidos = [10, 25, 50, 75, 90, 99]
+    for k in percentiles_elegidos:
+         resultados[f"Percentil {k}"] = cuantil(datos_frecuencias, k, 100)
+         
+    return resultados
