@@ -32,3 +32,11 @@ def coef_fp_momentos(datos_frecuencias, datos_tendencias):
         suma2 += (fi[i] * (xi[i] - media) ** 2) / N
 
     return suma1 / suma2 ** (3/2)
+
+def coef_asim_p1(datos_tendencias, datos_dispersion):
+    media = datos_tendencias["Media Aritmetica"]
+    moda = datos_tendencias["Moda"]
+    varianza = datos_dispersion["Varianza"]
+
+    return (media - moda) / varianza
+
